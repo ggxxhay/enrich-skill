@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import Container from 'react-bootstrap/Container';
+
+import PersonsInfo from './components/PersonsInfo'
+
+const personsData = [
+  { id: 1, name: "Thang", age: 18, address: "Hanoi" },
+  { id: 2, name: "Thang 2", age: 22, address: "Hanoi 2" },
+  { id: 3, name: "Thang 3", age: 21, address: "Hanoi 3" },
+]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <PersonsInfo data={personsData} />
+    </Container>
   );
 }
 
