@@ -3,25 +3,58 @@ import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
+import FormPerson from './FormPerson';
+import { Modes } from '../constants/Common'
+
 export default class PersonsInfo extends React.Component {
     constructor(props) {
+        debugger
         super(props);
         this.state = {
             data: props.data,
+            mode: Modes.view,
         }
         this.addNewPerson = this.addNewPerson.bind(this);
         this.deletePerson = this.deletePerson.bind(this);
+        this.editPerson = this.editPerson.bind(this);
+        this.submitForm = this.submitForm.bind(this);
     }
 
     addNewPerson() {
-        let data = this.state.data;
-        let maxId = 1;
-        if (data.length > 0) {
-            maxId = data[data.length - 1].id;
-        }
-        data.push({ id: maxId + 1, name: "asd", age: Math.floor(Math.random() * 10) + 20, address: "NA" });
         this.setState({
-            data: data,
+            mode: Modes.create,
+            formData: { id: 0, name: "", age: 18, address: "" },
+        })
+    }
+
+    editPerson(index) {
+        this.setState({
+            mode: Modes.edit,
+            formData: this.state.data[index],
+        })
+    }
+
+    submitForm(isSubmitted, formData) {
+        if (isSubmitted) {
+            let data = this.state.data;
+            let maxId = 1;
+            if (this.state.mode === Modes.create) {
+                if (data.length > 0) {
+                    maxId = data[data.length - 1].id;
+                }
+                data.push({ ...formData, id: maxId + 1 });
+            } else {
+                let personIndex = data.findIndex(person => person.id === formData.id);
+                if (personIndex >= 0) {
+                    data[personIndex] = formData;
+                }
+            }
+            this.setState({
+                data: data,
+            })
+        }
+        this.setState({
+            mode: Modes.view,
         })
     }
 
@@ -34,7 +67,10 @@ export default class PersonsInfo extends React.Component {
     }
 
     render() {
-        const personRows = this.state.data.map((el, index) => {
+        if (this.state.mode === Modes.create || this.state.mode === Modes.edit) {
+            return <FormPerson mode={this.state.mode} data={this.state.formData} onSubmit={this.submitForm} />;
+        }
+        const tableRows = this.state.data.map((el, index) => {
             return (
                 <tr key={el.id}>
                     <td className="align-middle text-center">{index + 1}</td>
@@ -42,8 +78,8 @@ export default class PersonsInfo extends React.Component {
                     <td className="align-middle">{el.age}</td>
                     <td className="align-middle">{el.address}</td>
                     <td className="align-middle d-flex justify-content-around">
-                        <Button variant="success">Edit</Button>
-                        <Button variant="danger" onClick={(e) => this.deletePerson(index, e)}>Delete</Button>
+                        <Button variant="success" onClick={() => this.editPerson(index)}>Edit</Button>
+                        <Button variant="danger" onClick={() => this.deletePerson(index)}>Delete</Button>
                     </td>
                 </tr>
             )
@@ -58,7 +94,7 @@ export default class PersonsInfo extends React.Component {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th style={{ width: "5%"}} className="text-center">#</th>
+                                <th style={{ width: "5%" }} className="text-center">#</th>
                                 <th>Name</th>
                                 <th>Age</th>
                                 <th>Address</th>
@@ -66,7 +102,7 @@ export default class PersonsInfo extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {personRows}
+                            {tableRows}
                         </tbody>
                     </Table>
                 </Row>
