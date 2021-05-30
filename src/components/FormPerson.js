@@ -8,7 +8,6 @@ import { Modes } from "../constants/Common";
 
 export default class FormPerson extends React.Component {
     constructor(props) {
-        debugger
         super(props);
         let title, action;
         if (this.props.mode === Modes.create) {
@@ -18,13 +17,14 @@ export default class FormPerson extends React.Component {
             title = 'Edit Person';
             action = 'Update';
         }
-        this.state = {
+        this.state = { // Q&A: should use this.state.data?
             title: title,
             action: action,
             id: this.props.data.id,
             name: this.props.data.name,
             age: this.props.data.age,
             address: this.props.data.address,
+            job: this.props.data.job,
         }
 
         this.onChange = this.onChange.bind(this);
@@ -42,7 +42,8 @@ export default class FormPerson extends React.Component {
             id: this.state.id,
             name: this.state.name,
             age: this.state.age,
-            address: this.state.address
+            address: this.state.address,
+            job: this.state.job,
         };
         this.props.onSubmit(true, data);
     }

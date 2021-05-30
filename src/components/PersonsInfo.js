@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -8,7 +9,6 @@ import { Modes } from '../constants/Common'
 
 export default class PersonsInfo extends React.Component {
     constructor(props) {
-        debugger
         super(props);
         this.state = {
             data: props.data,
@@ -74,7 +74,13 @@ export default class PersonsInfo extends React.Component {
             return (
                 <tr key={el.id}>
                     <td className="align-middle text-center">{index + 1}</td>
-                    <td className="align-middle">{el.name}</td>
+                    <td className="align-middle">
+                        <Link to={{
+                            pathname: this.props.location.pathname + "/" + el.id,
+                            state: el,
+                        }}>{el.name}
+                        </Link>
+                    </td>
                     <td className="align-middle">{el.age}</td>
                     <td className="align-middle">{el.address}</td>
                     <td className="align-middle d-flex justify-content-around">
