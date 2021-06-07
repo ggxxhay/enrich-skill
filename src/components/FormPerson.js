@@ -17,14 +17,10 @@ export default class FormPerson extends React.Component {
             title = 'Edit Person';
             action = 'Update';
         }
-        this.state = { // Q&A: should use this.state.data?
+        this.state = {
             title: title,
             action: action,
-            id: this.props.data.id,
-            name: this.props.data.name,
-            age: this.props.data.age,
-            address: this.props.data.address,
-            job: this.props.data.job,
+            ...this.props.data,
         }
 
         this.onChange = this.onChange.bind(this);
