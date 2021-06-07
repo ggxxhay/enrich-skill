@@ -5,3 +5,20 @@
 .nav-link-active {
   color: blue;
 }
+
+.car {
+  width: 100px;
+  height: 25px;
+  position: absolute;
+  display: flex;
+}
+.carBack{
+  color: yellow;
+  background-color: blueviolet;
+  text-align: center;
+  width: 80px;
+}
+.carFront{
+  background-color: greenyellow;
+  width: 20px;
+}
