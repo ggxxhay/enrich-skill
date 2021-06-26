@@ -19,7 +19,7 @@ export default class Car extends React.Component {
             // console.log("move");
             let currentLeft = car.style.left.replace("px", "");
             let currentLeftNum = 0;
-            if (currentLeft != null && currentLeft != "") {
+            if (currentLeft != null && currentLeft !== "") {
                 currentLeftNum = parseFloat(currentLeft);
             }
             car.style.left = currentLeftNum + this.speed + "px";
@@ -32,7 +32,7 @@ export default class Car extends React.Component {
             // console.log("rotate");
             this.degrees += 0.3;
             car.style.webkitTransform = 'rotate(' + this.degrees + 'deg)';
-            if (Math.ceil(this.degrees) % 90 == 0) {
+            if (Math.ceil(this.degrees) % 90 === 0) {
                 clearInterval(this.rotateIntervalId);
                 car.style.webkitTransform = 'rotate(' + Math.ceil(this.degrees) + 'deg)';
                 this.degrees = 0;
