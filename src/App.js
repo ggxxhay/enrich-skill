@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-do
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
-import PersonsInfo from './components/PersonsInfo'
-import PersonsInfoDetails from './components/PersonsInfoDetails'
+import PersonsInfo from './components/PersonsInfo';
+import PersonsInfoDetails from './components/PersonsInfoDetails';
 
 import "./App.css";
 import City from "./components/City";
@@ -21,7 +21,6 @@ function App() {
         <Nav>
           <Nav.Item>
             <NavLink className="nav-link" activeClassName="nav-link-active" exact to="/">Home</NavLink>
-            {/* <Nav.Link href="/home">Home</Nav.Link> */}
           </Nav.Item>
           <Nav.Item>
             <NavLink className="nav-link" activeClassName="nav-link-active" to="/about">About</NavLink>
@@ -38,8 +37,8 @@ function App() {
           <Route exact path="/about">
             <About />
           </Route>
-          <Route exact path="/persons" render={props => <PersonsInfo {...props} data={personsData} />} />
-          <Route exact path="/persons/:id" render={props => <PersonsInfoDetails {...props} data={personsData.find(p => p.id.toString() === props.match.params.id)} />} />
+          <Route path="/persons" render={props => <PersonsInfo {...props} data={personsData} />} />
+          {/* <Route exact path="/persons/:id" render={props => <PersonsInfoDetails {...props} data={personsData.find(p => p.id.toString() === props.match.params.id)} />} /> */}
           <Route exact path="/city">
             <City />
           </Route>
