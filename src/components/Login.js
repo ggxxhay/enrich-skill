@@ -52,7 +52,7 @@ export default function Login(props) {
                     <Form.Label column sm={2}>
                         Password:
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={10}>  {/* type="text" to prevent chrome warning about weak password */}
                         <Form.Control type="text" placeholder="password" value={password} onChange={onPasswordChange} />
                     </Col>
                 </Form.Group>
