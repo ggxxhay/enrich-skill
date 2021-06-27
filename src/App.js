@@ -1,12 +1,14 @@
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
 import PersonsInfo from './components/PersonsInfo';
+import Login from './components/Login';
 import PersonsInfoDetails from './components/PersonsInfoDetails';
 
 import "./App.css";
 import City from "./components/City";
+import { Button } from "react-bootstrap";
 
 const personsData = [
   { id: 1, name: "Thang", age: 18, address: "Hanoi", job: "Developer" },
@@ -14,10 +16,33 @@ const personsData = [
   { id: 3, name: "Thang 3", age: 21, address: "Hanoi 3", job: "Farmer" },
 ]
 
+const KEY_IS_LOGGED_IN = "IsLoggedIn";
+
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem(KEY_IS_LOGGED_IN)) {
+      setIsLoggedIn(true);
+    }
+  }, [])
+
+  const onLoggedIn = () => {
+    localStorage.setItem(KEY_IS_LOGGED_IN, "1");
+    setIsLoggedIn(true);
+  }
+
+  const onLogout = () => {
+    localStorage.removeItem(KEY_IS_LOGGED_IN);
+    setIsLoggedIn(false);
+  }
+
+  if (!isLoggedIn) {
+    return <Login onLoggedIn={onLoggedIn} />;
+  }
+
   return (
     <Router>
-      <Container>
         <Nav>
           <Nav.Item>
             <NavLink className="nav-link" activeClassName="nav-link-active" exact to="/">Home</NavLink>
@@ -31,6 +56,7 @@ function App() {
           <Nav.Item>
             <NavLink className="nav-link" activeClassName="nav-link-active" to="/city">City</NavLink>
           </Nav.Item>
+          <Button variant="danger" onClick={onLogout}>Logout</Button>
         </Nav>
 
         <Switch>
@@ -46,7 +72,6 @@ function App() {
             <Home />
           </Route>
         </Switch>
-      </Container>
     </Router>
   );
 }
