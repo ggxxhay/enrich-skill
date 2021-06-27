@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
 import FormPerson from './FormPerson';
+import PersonsInfoListItem from './PersonsInfoListItem';
 import { Modes } from '../constants/Common'
 
 export default class PersonsInfoList extends React.Component {
@@ -72,28 +72,6 @@ export default class PersonsInfoList extends React.Component {
         }
 
         const data = this.state.data;
-        const matchPath = this.props.matchPath;
-
-        const tableRows = data.map((el, index) => {
-            return (
-                <tr key={el.id}>
-                    <td className="align-middle text-center">{index + 1}</td>
-                    <td className="align-middle">
-                        <Link to={{
-                            pathname: matchPath + "/" + el.id,
-                            state: el,
-                        }}>{el.name}
-                        </Link>
-                    </td>
-                    <td className="align-middle">{el.age}</td>
-                    <td className="align-middle">{el.address}</td>
-                    <td className="align-middle d-flex justify-content-around">
-                        <Button variant="success" onClick={() => this.editPerson(index)}>Edit</Button>
-                        <Button variant="danger" onClick={() => this.deletePerson(index)}>Delete</Button>
-                    </td>
-                </tr>
-            )
-        })
 
         return (
             <React.Fragment>
@@ -112,7 +90,20 @@ export default class PersonsInfoList extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableRows}
+                            {
+                                data.map((item, index) => {
+                                    return (
+                                        <PersonsInfoListItem
+                                            key={item.id}
+                                            matchPath={this.props.matchPath}
+                                            item={item}
+                                            index={index}
+                                            editPerson={this.editPerson}
+                                            deletePerson={this.deletePerson}
+                                        />
+                                    )
+                                })
+                            }
                         </tbody>
                     </Table>
                 </Row>

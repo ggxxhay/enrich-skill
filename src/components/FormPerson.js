@@ -33,7 +33,8 @@ export default class FormPerson extends React.Component {
         })
     }
 
-    onSubmit() {
+    onSubmit(e) {
+        e.preventDefault();
         let data = {
             id: this.state.id,
             name: this.state.name,
