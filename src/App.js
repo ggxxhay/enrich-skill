@@ -4,7 +4,8 @@ import Nav from 'react-bootstrap/Nav';
 
 import PersonsInfo from './components/PersonsInfo';
 import Login from './components/Login';
-import PersonsInfoDetails from './components/PersonsInfoDetails';
+import Home from './components/Home';
+import About from './components/About';
 
 import "./App.css";
 import City from "./components/City";
@@ -64,7 +65,6 @@ function App() {
             <About />
           </Route>
           <Route path="/persons" render={props => <PersonsInfo {...props} data={personsData} />} />
-          {/* <Route exact path="/persons/:id" render={props => <PersonsInfoDetails {...props} data={personsData.find(p => p.id.toString() === props.match.params.id)} />} /> */}
           <Route exact path="/city">
             <City />
           </Route>
@@ -74,14 +74,6 @@ function App() {
         </Switch>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
 }
 
 export default App;
